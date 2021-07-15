@@ -1,30 +1,27 @@
-import React,{useState} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 
 import {Picker} from '@react-native-picker/picker';
-
+import {ConstextResponse} from '../App';
 
 function ControlOnOff(props) {
-
     const {bodyRequest,requestAxios} = props; 
-    console.log(bodyRequest);
 
+    const [context, setContext] = useContext(ConstextResponse);
+    
     const onControl = async () =>{
         console.log("ON");
+        console.log(bodyRequest);
         let res = await requestAxios('http://192.168.69.93/',bodyRequest);
-        res ? console.log('jalo') : console.log('no jalo');
+        setContext(res.response);
     }
 
     const offControl = async () =>{
         console.log("OFF");
-        let res = await requestAxios('http://192.168.69.93/',{...bodyRequest,control:'1000'});
-        res ? console.log('jalo') : console.log('no jalo');
-    }
-
-    const tempoControl = async () => {
-        console.log("TEMPORIZAR");
-        let res = await requestAxios('http://192.168.69.93/',{...bodyRequest,control:'9910'});
-        res ? console.log('jalo') : console.log('no jalo');
+        const newBodyRequest = {...bodyRequest,control:'1000'};
+        console.log(newBodyRequest);
+        let res = await requestAxios('http://192.168.69.93/',newBodyRequest);
+        setContext(res.response);
     }
 
     const [selectedLanguage, setSelectedLanguage] = useState();
@@ -51,13 +48,6 @@ function ControlOnOff(props) {
                     <Text style={stylesOnOFF.textButton}>Off</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity 
-                onPress={tempoControl}>
-                    <Text style={stylesOnOFF.textButton}>Temporizar</Text>
-            </TouchableOpacity>
-            <View>
-                <Text style={stylesOnOFF.textButton}>Resultado</Text>
-            </View>
         </View>
     )
 }
@@ -70,8 +60,7 @@ const stylesOnOFF = StyleSheet.create({
     },
     controlOnOff:{
         flex:1,
-        flexDirection:'row',
-        
+        flexDirection:'row',     
     },
     controlRow:{
         flex:1,
@@ -93,5 +82,11 @@ const stylesOnOFF = StyleSheet.create({
         fontWeight:'bold',
         paddingRight:5,
         paddingLeft:5
+    },
+    resultadoOn:{
+        backgroundColor:'#6BFF33'
+    },
+    resultadoOff:{
+        backgroundColor: '#F10000'
     }
 });

@@ -1,64 +1,44 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {View} from 'react-native'
+
 import {
-  SafeAreaView,
+  ActivityIndicator,
   StatusBar,
-  useColorScheme
+  ImageBackground
 } from 'react-native';
 
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
-import ControlOnOff from './componentes/ControlOnOff';
+import {Context,appStateContext} from './componentes/context/Context'
+import stylesApp from './stylesApp';
 import Cronometro from './componentes/Cronometro';
-import axios from 'axios'
+import ControlOnOff from './componentes/ControlOnOff';
+import plaza from './assest/plaza.jpg';
 
-const bodyRequest = {
-  control:'1100',
-  cT:3216,
-  des:23
-}
-
-const requestAxios = async (url,body) => {
-  let result = false;
-  let confBodyRequest = (body === undefined) ?
-      {
-          method:'GET',
-          url:url,
-          timeout:5000,
-      } : 
-      {
-          method:'POST',
-          url:url,
-          data:body,
-          headers:{
-              'Content-type': 'text/plain'
-          },
-          timeout:5000,
-      }
-  result = await axios(confBodyRequest)
-      .then(response => {
-          return response.data;
-      })
-      .catch(error =>{
-          return error;
-      });
-  return result;
-} 
 
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [context, setContext] = useState(appStateContext);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+
+ //const focoState = context.appResponse.control1 ? stylesApp.resultadoOn : stylesApp.resultadoOff;
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Cronometro bodyRequest={bodyRequest} requestAxios={requestAxios}/>
-      <ControlOnOff bodyRequest={bodyRequest} requestAxios={requestAxios}/>
-    </SafeAreaView>
+    <View style={stylesApp.mainContainer}>
+      <ImageBackground 
+        style={stylesApp.imageBackground} 
+        source={plaza}
+        resizeMode="cover">
+      <Context.Provider value={[context,setContext]}>
+        <StatusBar/>
+        
+        <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
+        <Cronometro/>
+        {/*<ControlOnOff bodyRequest={bodyRequest} requestAxios={requestAxios}/>
+        <View style={focoState}>
+                <Text style={stylesApp.textButton}>Resultado</Text>
+  </View>*/}
+      </Context.Provider>
+      </ImageBackground>
+    </View>
   );
 };
 
