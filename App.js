@@ -12,6 +12,7 @@ import stylesApp from './stylesApp';
 import Cronometro from './componentes/Cronometro';
 import ControlOnOff from './componentes/ControlOnOff';
 import plaza from './assest/plaza.jpg';
+import Login from './componentes/LoginScreem/login';
 
 
 
@@ -28,11 +29,13 @@ const App = () => {
         source={plaza}
         resizeMode="cover">
       <Context.Provider value={[context,setContext]}>
-        <StatusBar/>
+        <StatusBar
+          backgroundColor="#9a0007"/>
+          <Login/>
         
-        <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
+        {/*<ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
         <Cronometro/>
-        {/*<ControlOnOff bodyRequest={bodyRequest} requestAxios={requestAxios}/>
+        <ControlOnOff bodyRequest={bodyRequest} requestAxios={requestAxios}/>
         <View style={focoState}>
                 <Text style={stylesApp.textButton}>Resultado</Text>
   </View>*/}
