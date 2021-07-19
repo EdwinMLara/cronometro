@@ -9,18 +9,14 @@ import {
 
 import {Context,appStateContext} from './componentes/context/Context'
 import stylesApp from './stylesApp';
-import Cronometro from './componentes/Cronometro';
-import ControlOnOff from './componentes/ControlOnOff';
 import plaza from './assest/plaza.jpg';
 import Login from './componentes/LoginScreem/login';
+import Control from './componentes/controlScreen/Control';
 
 
 
 const App = () => {
   const [context, setContext] = useState(appStateContext);
-
-
- //const focoState = context.appResponse.control1 ? stylesApp.resultadoOn : stylesApp.resultadoOff;
 
   return (
     <View style={stylesApp.mainContainer}>
@@ -31,14 +27,9 @@ const App = () => {
       <Context.Provider value={[context,setContext]}>
         <StatusBar
           backgroundColor="#9a0007"/>
-          <Login/>
+          <Control/>
         
-        {/*<ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
-        <Cronometro/>
-        <ControlOnOff bodyRequest={bodyRequest} requestAxios={requestAxios}/>
-        <View style={focoState}>
-                <Text style={stylesApp.textButton}>Resultado</Text>
-  </View>*/}
+        <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
       </Context.Provider>
       </ImageBackground>
     </View>

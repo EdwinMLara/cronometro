@@ -15,7 +15,7 @@ function Login() {
 
     return (
 
-      <LinearGradient colors={['#ffffff', '#e57373']} style={stylesLogin.linearGradient}>
+      <LinearGradient colors={['#ffffffc0', '#e57373c0']} style={stylesLogin.linearGradient}>
         
         <View style={stylesLogin.container}>
 
