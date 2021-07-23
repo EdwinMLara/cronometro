@@ -20,16 +20,15 @@ const App = () => {
 
   return (
     <View style={stylesApp.mainContainer}>
+      <StatusBar backgroundColor="#9a0007"/>
       <ImageBackground 
         style={stylesApp.imageBackground} 
         source={plaza}
         resizeMode="cover">
       <Context.Provider value={[context,setContext]}>
-        <StatusBar
-          backgroundColor="#9a0007"/>
           <Control/>
-        
-        <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />
+          {/*<Login/>
+        <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />*/}
       </Context.Provider>
       </ImageBackground>
     </View>
