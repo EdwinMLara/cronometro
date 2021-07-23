@@ -4,26 +4,27 @@ const stylesLogin = StyleSheet.create({
     linearGradient:{
       flex: 1
     },
-    container:{
-      margin:5
+    containerChange:{
+      flex:1
     },
-    box:{
-        marginBottom:15
+    inner: {
+      padding: 20,
+      flex: 1,
+      justifyContent: "space-around"
     },
     titleContainer:{
       alignItems:'center',
-      marginBottom:30
     },
     title:{
       fontSize:24,
       alignContent:'center',
-      
+      fontWeight:'bold',
+      color:'black'
     },
     imagePalomita:{
       width:'70%',
-      height:180,
+      height:165,
       marginLeft:'15%',
-      marginBottom:20,
       marginTop:30,
       opacity:0.9,
       resizeMode: 'stretch'

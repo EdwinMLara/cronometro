@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { View,Image,Text } from 'react-native';
+import { View,Image,Text,KeyboardAvoidingView,Platform,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import { TextInput,Button} from 'react-native-paper';
 
 import stylesLogin from './styleLogin'
@@ -14,10 +14,13 @@ function Login() {
     console.log(colors)
 
     return (
-
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={stylesLogin.containerChange}
+    >
       <LinearGradient colors={['#ffffffc0', '#e57373c0']} style={stylesLogin.linearGradient}>
-        
-        <View style={stylesLogin.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
+        <View style={stylesLogin.inner}>
 
           <Image
             style={stylesLogin.imagePalomita}
@@ -55,8 +58,11 @@ function Login() {
                 Login
             </Button>
           </View>
+          </TouchableWithoutFeedback> 
           
         </LinearGradient>
+
+        </KeyboardAvoidingView>
     );
 }
 
