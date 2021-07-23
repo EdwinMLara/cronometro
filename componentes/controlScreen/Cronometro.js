@@ -1,52 +1,35 @@
-import React,{useState,useContext } from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import {Context} from '../context/Context';
-import { View } from 'react-native';
+import { View,Text } from 'react-native';
 import stylesCronometro from './styleCronometro';
-import Defase from './Defase';
-import ConfiguracionTempo from './ConfiguracionTempo';
+import ConfiguracionTempo from './ConfiguracionTempo'; 
 /**typografia es gotam */
 
-const t = {t1:'1',t2:'1',t3:'1',t4:'1'};
-
 function Cronometro() {
-    const [context, setContext] = useContext(Context);
-    const {bodyRequest,url,requestAxios} = context.appRequest;
+    const [context, setContext] =  useContext(Context);
+    const {seconds2Time,defase} = context.appState;
+    console.log(context);
+    const [timeText,setTimeText] =  useState('APAGADO');
     
+    
+    useEffect(()=>{
+        let {tempo} = context.appResponse;
+        let {state,time} = tempo;
+        time = parseInt(time/1000);
+        state ? setTimeText(seconds2Time(time)) : null ;
+    },[defase]);
 
-    const [ct,setCT] = useState(t);
-
-    const tempoControl = async () => {
-        console.log("TEMPORIZAR");
-        let confTempo = ct.t1+ct.t2+ct.t3+ct.t4;
-        try {
-            const newBodyRequest = {control:'9910',cT:confTempo,des:5};           
-            let res = await requestAxios(url,newBodyRequest);
-            console.log(res.response);
-            setContext({...context,appResponse});
-            let seconds = res.response.tempo.time;
-            setTime(parseInt(seconds));
-            let strTime  = seconds2Time(seconds);
-            setTimeText(strTime);
-        } catch (error) {
-            Alert.alert(
-                "Error",
-                "No encontro el servidor",
-                [
-                    {
-                    text: "Cancelar",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                    },
-                    { text: "Aceptar", onPress: () => console.log("OK Pressed") }
-                ]
-            )
-        }
-    }
-
+    /*useInterval(() => {
+        setTime(time + 1);
+        let strTime = props.seconds2Time(time);
+        console.log(strTime);
+        setTimeText(strTime);
+    }, 1000,context.appResponse.tempo.state); */ 
+    
     return (
         <View style={stylesCronometro.container}>
-             <ConfiguracionTempo/>
-             <Defase/>
+            <Text style={stylesCronometro.textCronometro}>{timeText}</Text>
+            <ConfiguracionTempo/>
         </View>
     )
 }

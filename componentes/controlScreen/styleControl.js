@@ -5,7 +5,8 @@ const stylesControl = StyleSheet.create({
         flex:1
     },
     container:{
-        margin:5
+        flex:1,
+        padding:10
     },
     titleContainer:{
         alignItems:'center'

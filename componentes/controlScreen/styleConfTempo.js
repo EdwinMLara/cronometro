@@ -2,20 +2,22 @@ import { StyleSheet } from "react-native";
 
 const styleConfTempo = StyleSheet.create({
  container:{
-   marginTop:10,
-   justifyContent:'center',
-   alignItems:'center'
- },
- containerRow:{
-    flexDirection:'row'
- },
- subContainer:{
-    flex:1,
-    justifyContent:"center",
-    margin:5
+   flex:1,
+   justifyContent:'space-around'
  },
  title:{
-    fontSize:20
+   fontSize:20,
+ },
+ containerRow:{
+    flexDirection:'row',
+    justifyContent:'space-around' 
+   },
+ subContainer:{
+    justifyContent:"center",
+ },
+ modal:{
+   padding: 20,
+   backgroundColor: 'white'
  }
 });
 

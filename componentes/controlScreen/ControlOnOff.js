@@ -1,25 +1,25 @@
 import React,{useContext} from 'react'
-import {Text, TouchableOpacity, View} from 'react-native'
+import {Text,View} from 'react-native'
 import {Context} from '../context/Context';
 import stylesControlOnOFF from './styleControlOnOff';
 import { Button } from 'react-native-paper'
 function ControlOnOff() {
 
     const [context, setContext] = useContext(Context);
+    const {url,bodyRequest,requestAxios} = context.appRequest;
     
     const onControl = async () =>{
+        let res = await requestAxios(url,{...bodyRequest,control:'1100'});
+        console.log(res );
+        res !== undefined && await setContext({...context,appResponse:res.response});
         console.log("ON");
-        console.log(bodyRequest);
-        let res = await requestAxios('http://192.168.69.93/',bodyRequest);
-        setContext(res.response);
     }
 
     const offControl = async () =>{
+        let res = await requestAxios(url,{...bodyRequest,control:'1000'});
+        console.log(res);
+        res !== undefined && await setContext({...context,appResponse:res.response});
         console.log("OFF");
-        const newBodyRequest = {...bodyRequest,control:'1000'};
-        console.log(newBodyRequest);
-        let res = await requestAxios('http://192.168.69.93/',newBodyRequest);
-        setContext(res.response);
     }
 
     return (
