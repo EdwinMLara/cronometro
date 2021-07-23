@@ -1,21 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState,useContext,useEffect} from 'react'
 import { Text, View,Image } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { List } from 'react-native-paper'
 import stylesControl from './styleControl'
 import foco_apagado from '../../assest/foco_apagado.png'
+import foco_encendido from'../../assest/foco_encendido.png'
 import Cronometro from './Cronometro'
 import ControlOnOff from './ControlOnOff'
+import {Context} from '../context/Context';
 
 function Control() {
     const [expanded,setExpanded] = useState(false);
     const handleExpandedList = () => setExpanded(!expanded);
 
-    const [valueList,setValueList] = useState(false);
-    const handlePressedList = (selected) => { 
-        setValueList(selected)
-        setExpanded(false); 
+    const [selected ,setSelected] = useState(false);
+    const handlePressedList = (select) =>{
+        setSelected(select);
+        setExpanded(false);
     }
+    const [context, setContext] = useContext(Context);
+    const {control1,tempo} = context.appResponse;
+    const {url,requestAxios} = context.appRequest;
+    let renderImage = control1 ? foco_encendido : foco_apagado;
+
+    useEffect(async () =>{
+        console.log("Control");
+        let res = await requestAxios(url);
+        if(res !== undefined){
+            console.log(res.response);
+            await setContext({...context,appResponse:res.response});
+        }
+    },[]);
+
     return (
         <LinearGradient colors={['#ffffffc0', '#e57373c0']} style={stylesControl.linearGradient}>
             <View style={stylesControl.container}>
@@ -25,7 +41,8 @@ function Control() {
                     </Text>
                 </View>
 
-                <Image style={stylesControl.imageFoco} source={foco_apagado}/>
+                <Image style={stylesControl.imageFoco} 
+                        source={renderImage}/>
                 
                 <List.Accordion
                     title="Tipos de control"
@@ -42,7 +59,7 @@ function Control() {
                         />
                 </List.Accordion>
 
-                {valueList ? <Cronometro/> : <ControlOnOff/> }
+                {(selected ) ? <Cronometro/> : (tempo.state) ? <Cronometro/> : <ControlOnOff/>}
                 
             </View>
         </LinearGradient>
