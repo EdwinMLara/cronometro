@@ -9,12 +9,6 @@ const stylesApp = StyleSheet.create({
         flex:1,
         justifyContent:"center"
     },
-    resultadoOn:{
-        backgroundColor:'#6BFF33'
-    },
-    resultadoOff:{
-        backgroundColor: '#F10000'
-    },
     spinner:{
       flex: 1,
       position:'absolute',
