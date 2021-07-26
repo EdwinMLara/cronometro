@@ -3,28 +3,30 @@ import {Context} from '../context/Context';
 import { View,Text } from 'react-native';
 import stylesCronometro from './styleCronometro';
 import ConfiguracionTempo from './ConfiguracionTempo'; 
+import useInterval from '../customHooks/useInterval';
 /**typografia es gotam */
 
 function Cronometro() {
-    const [context, setContext] =  useContext(Context);
-    const {seconds2Time,defase} = context.appState;
-    console.log(context);
+    const [context] =  useContext(Context);
+    const {seconds2Time} = context.appState;
     const [timeText,setTimeText] =  useState('APAGADO');
+    const [auxTime, setAuxTime] = useState(0);
+    const [stateTempo,setStateTempo] = useState(false);
     
     
-    useEffect(()=>{
+    useEffect(async ()=>{
         let {tempo} = context.appResponse;
-        let {state,time} = tempo;
-        time = parseInt(time/1000);
-        state ? setTimeText(seconds2Time(time)) : null ;
-    },[defase]);
+        let control = {...tempo};
+        await setAuxTime(parseInt(control.time/1000));
+        control.state ? setStateTempo(true) : setStateTempo(false);
+        
+    },[]);
 
-    /*useInterval(() => {
-        setTime(time + 1);
-        let strTime = props.seconds2Time(time);
-        console.log(strTime);
-        setTimeText(strTime);
-    }, 1000,context.appResponse.tempo.state); */ 
+    useInterval(() => {
+        let time = parseInt(auxTime);
+        setTimeText(seconds2Time(time));
+        setAuxTime(auxTime + 1);
+    }, 1000,stateTempo); 
     
     return (
         <View style={stylesCronometro.container}>
