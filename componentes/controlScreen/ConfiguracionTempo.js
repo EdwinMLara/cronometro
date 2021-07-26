@@ -28,6 +28,13 @@ function ConfiguracionTempo() {
         }
     }
 
+    const handleOffControl = async () =>{
+        let res = await requestAxios(url,{...bodyRequest,control:'1000'});
+        console.log(res);
+        res !== undefined && await setContext({...context,appResponse:res.response});
+        console.log("OFF");
+    }
+
     return (
         <View style={styleConfTempo.container}>
             <Text style={styleConfTempo.title}>
@@ -64,7 +71,7 @@ function ConfiguracionTempo() {
                 <Button 
                     mode="contained" 
                     color="#9a0007"
-                    onPress={handleTemporizar}>Off</Button>
+                    onPress={handleOffControl}>Off</Button>
                 <Button 
                     mode="contained" 
                     color="#9a0007" 
