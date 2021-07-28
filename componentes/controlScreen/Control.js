@@ -34,7 +34,7 @@ function Control() {
         }catch{
             Alert.alert(
                 "Error",
-                "Error al intentar conectar con el servidor conseulte al desarrollador",
+                "Error al intentar conectar con el servidor consulte al desarrollador",
                 [
                     { text: "Aceptar", onPress: () => setError(true) }
                 ]
