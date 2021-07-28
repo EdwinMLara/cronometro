@@ -18,6 +18,7 @@ function Defase() {
             let aux = parseInt(desfaseText);
             if(aux > 0 && aux <= 60){ 
                 let res = await requestAxios(url,{...bodyRequest,control:'9901',des:aux});
+                console.log(res);
                 await setContext({
                     ...context,
                     appResponse:res.response,

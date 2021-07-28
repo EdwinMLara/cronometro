@@ -30,7 +30,10 @@ function Control() {
         try{
             res = await requestAxios(url);
             console.log(res);
-            await setContext({...context,appResponse:res.response});
+            await setContext({
+                ...context,
+                appResponse:res.response
+            });
         }catch{
             Alert.alert(
                 "Error",

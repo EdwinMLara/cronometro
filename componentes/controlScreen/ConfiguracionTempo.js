@@ -1,13 +1,29 @@
 import React,{useState,useContext} from 'react'
-import { View,Text} from 'react-native'
+import { View,Text, Alert} from 'react-native'
 import {TextInput,Button, Modal} from 'react-native-paper'
 import styleConfTempo from './styleConfTempo'
 import Defase from './Defase'
 import {Context} from '../context/Context'
 
+function checkError(error,auxStr,control){
+    switch(error){
+        case 1:
+            Alert.alert("Error","No se aceptan numero negativos");
+            break;
+        case 2:
+            auxStr += '0' + control;
+            break;
+        default:
+            auxStr += control;    
+    } 
+    return auxStr;
+}
+
 function ConfiguracionTempo() {
     const [visible, setVisible] = useState(false);
     const [context,setContext] = useContext(Context);
+    const {appState} = context;
+    const {starTempo} = appState;
     const {url,bodyRequest,requestAxios} = context.appRequest;
     const [confTempo,setConfigTempo] = useState({te:'11',ta:'13'});
     
@@ -15,13 +31,32 @@ function ConfiguracionTempo() {
     const hideModal = () => setVisible(false);
 
     const handleTemporizar = async () =>{
+        console.log("Temporizar")
         try{
-            let auxStr = confTempo.te + confTempo.ta;
-            if(auxStr !== '' && auxStr !== ' '){
-                let res =await requestAxios(url,{...bodyRequest,control:'9910',cT:auxStr});
-                res !== undefined && await setContext({...context,appResponse:res.response});
-                console.log(res);
+            let error = 0;
+            let error2 = 0;
+            
+            let auxTe = parseInt(confTempo.te);
+            auxTe < 0 ? error = 1 : auxTe < 10 ? error  = 2 : null;
+            let auxStr = checkError(error,'',confTempo.te);
+            if(error == 1){
+                return;
             }
+            let auxTa = parseInt(confTempo.ta);
+            auxTa < 0 ? error2 = 1 : auxTa < 10 ? error2  = 2 : null;
+            auxStr = checkError(error2,auxStr,confTempo.ta);
+            if(error2 == 1){
+                return;
+            }
+
+            let res =await requestAxios(url,{...bodyRequest,control:'9910',cT:auxStr});
+            res !== undefined && await setContext({...context,
+                appResponse:res.response,
+                appState:{...appState,
+                    starTempo:starTempo+1
+                }
+            });
+            console.log(res);
         }catch(error){
             console.log(error)
         }
