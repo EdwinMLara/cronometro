@@ -39,7 +39,8 @@ const Request = {
                 return response.data;
             })
             .catch(error =>{
-                return error;
+                console.log(error);
+                throw error;
             });
         return result;
     } 
