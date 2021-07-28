@@ -1,5 +1,5 @@
 import React, { useState,useContext,useEffect} from 'react'
-import { Text, View,Image } from 'react-native'
+import { Text, View,Image,Alert } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { List } from 'react-native-paper'
 import stylesControl from './styleControl'
@@ -18,6 +18,7 @@ function Control() {
         setSelected(select);
         setExpanded(false);
     }
+    const [error,setError] = useState(false);
     const [context, setContext] = useContext(Context);
     const {control1,tempo} = context.appResponse;
     const {url,requestAxios} = context.appRequest;
@@ -25,16 +26,25 @@ function Control() {
 
     useEffect(async () =>{
         console.log("Control");
-        let res = await requestAxios(url);
-        if(res !== undefined){
-            console.log(res.response);
+        let res;
+        try{
+            res = await requestAxios(url);
+            console.log(res);
             await setContext({...context,appResponse:res.response});
+        }catch{
+            Alert.alert(
+                "Error",
+                "Error al intentar conectar con el servidor conseulte al desarrollador",
+                [
+                    { text: "Aceptar", onPress: () => setError(true) }
+                ]
+            )
         }
     },[]);
 
     return (
         <LinearGradient colors={['#ffffffc0', '#e57373c0']} style={stylesControl.linearGradient}>
-            <View style={stylesControl.container}>
+            <View style={!error ? stylesControl.container : stylesControl.containerError}  pointerEvents={error ? 'none' : 'auto'}>
                 <View style={stylesControl.titleContainer}>
                     <Text style={stylesControl.title}>
                         Control de Iluminacion
