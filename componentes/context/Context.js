@@ -58,7 +58,8 @@ const State = {
         if (sec < 10) {sec = "0" + sec;}
         return hours+':'+min+':'+sec;
     },
-    defase:0
+    defase:0,
+    starTempo:0
 }
 
 export const appStateContext = {
