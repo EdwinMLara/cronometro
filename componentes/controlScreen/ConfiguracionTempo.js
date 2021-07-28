@@ -15,7 +15,6 @@ function ConfiguracionTempo() {
     const hideModal = () => setVisible(false);
 
     const handleTemporizar = async () =>{
-        console.log("ConfiguracionTempo");
         try{
             let auxStr = confTempo.te + confTempo.ta;
             if(auxStr !== '' && auxStr !== ' '){

@@ -8,6 +8,13 @@ const stylesControl = StyleSheet.create({
         flex:1,
         padding:10
     },
+    containerError:{
+        flex:1,
+        padding:10,
+        backgroundColor:'black',
+        opacity:0.5,
+        zIndex:10
+    },
     titleContainer:{
         alignItems:'center'
     },

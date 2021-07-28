@@ -4,6 +4,7 @@ import {Context} from '../context/Context';
 import stylesControlOnOFF from './styleControlOnOff';
 import { Button } from 'react-native-paper'
 function ControlOnOff() {
+    console.log("Control On Off");
 
     const [context, setContext] = useContext(Context);
     const {url,bodyRequest,requestAxios} = context.appRequest;
