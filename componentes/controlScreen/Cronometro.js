@@ -8,24 +8,24 @@ import useInterval from '../customHooks/useInterval';
 
 function Cronometro() {
     const [context] =  useContext(Context);
-    const {seconds2Time} = context.appState;
+    const {seconds2Time,defase} = context.appState;
     const [timeText,setTimeText] =  useState('APAGADO');
     const [auxTime, setAuxTime] = useState(0);
     const [stateTempo,setStateTempo] = useState(false);
     
     
     useEffect(async ()=>{
+        console.log("Lanzando tempo");
         let {tempo} = context.appResponse;
         let control = {...tempo};
         await setAuxTime(parseInt(control.time/1000));
         control.state ? setStateTempo(true) : setStateTempo(false);
         
-    },[]);
+    },[defase]);
 
     useInterval(() => {
-        let time = parseInt(auxTime);
-        setTimeText(seconds2Time(time));
         setAuxTime(auxTime + 1);
+        setTimeText(seconds2Time(auxTime));
     }, 1000,stateTempo); 
     
     return (

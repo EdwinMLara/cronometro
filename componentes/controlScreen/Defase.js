@@ -1,7 +1,6 @@
 import React,{useState,useContext} from 'react'
 import {View,TextInput} from 'react-native'
 import stylesDesfase from './styleDesfase';
-import useInterval from '../customHooks/useInterval'
 import {Context} from '../context/Context';
 import {Button} from 'react-native-paper';
 
@@ -17,13 +16,14 @@ function Defase() {
         console.log("Defasamiento",desfaseText);
         try{
             let aux = parseInt(desfaseText);
-            if(aux > 0 && aux < 60){ 
+            if(aux > 0 && aux <= 60){ 
                 let res = await requestAxios(url,{...bodyRequest,control:'9901',des:aux});
                 await setContext({
                     ...context,
                     appResponse:res.response,
                     appState:{
-                        ...appState,defase:defase+1
+                        ...appState,
+                        defase:defase+1
                     }
                 });
             }else{
@@ -49,4 +49,4 @@ function Defase() {
     )
 }
 
-export default Defase
+export default Defase;
