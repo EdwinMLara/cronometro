@@ -22,6 +22,8 @@ function Control() {
     const [context, setContext] = useContext(Context);
     const {control1,tempo} = context.appResponse;
     const {url,requestAxios} = context.appRequest;
+    const {appState} = context;
+    const {reRender} = appState;
     let renderImage = control1 ? foco_encendido : foco_apagado;
 
     useEffect(async () =>{
@@ -32,9 +34,14 @@ function Control() {
             console.log(res);
             await setContext({
                 ...context,
-                appResponse:res.response
+                appResponse:res.response,
+                appState:{
+                    ...appState,
+                    reRender:reRender+1
+                }
             });
-        }catch{
+        }catch(error){
+            console.log(error);
             Alert.alert(
                 "Error",
                 "Error al intentar conectar con el servidor consulte al desarrollador",

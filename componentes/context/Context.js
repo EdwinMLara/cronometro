@@ -59,7 +59,8 @@ const State = {
         return hours+':'+min+':'+sec;
     },
     defase:0,
-    starTempo:0
+    starTempo:0,
+    reRender:0
 }
 
 export const appStateContext = {

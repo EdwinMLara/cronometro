@@ -8,7 +8,7 @@ import useInterval from '../customHooks/useInterval';
 
 function Cronometro() {
     const [context] =  useContext(Context);
-    const {seconds2Time,defase,starTempo} = context.appState;
+    const {seconds2Time,defase,starTempo,reRender} = context.appState;
     const [timeText,setTimeText] =  useState('APAGADO');
     const [auxTime, setAuxTime] = useState(0);
     const [stateTempo,setStateTempo] = useState(false);
@@ -19,11 +19,11 @@ function Cronometro() {
         let {tempo} = context.appResponse;
         let control = {...tempo};
         let actualTime = parseInt(control.time/1000);
-        console.log(actualTime);
+        console.log("Time",actualTime);
         setAuxTime(actualTime);
         control.state ? setStateTempo(true) : setStateTempo(false);
         
-    },[defase,starTempo]);
+    },[defase,starTempo,reRender]);
 
     useInterval(() => {
         setAuxTime(auxTime + 1);
