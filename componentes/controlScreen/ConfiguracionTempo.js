@@ -31,6 +31,7 @@ function ConfiguracionTempo() {
     const hideModal = () => setVisible(false);
 
     const handleTemporizar = async () =>{
+        await setContext({...context,appState:{...appState,loading:true}});
         console.log("Temporizar")
         try{
             let error = 0;
@@ -53,7 +54,8 @@ function ConfiguracionTempo() {
             res !== undefined && await setContext({...context,
                 appResponse:res.response,
                 appState:{...appState,
-                    starTempo:starTempo+1
+                    starTempo:starTempo+1,
+                    loading:false
                 }
             });
             console.log(res);

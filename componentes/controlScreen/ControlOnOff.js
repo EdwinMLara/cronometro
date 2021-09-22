@@ -8,8 +8,9 @@ function ControlOnOff() {
 
     const [context, setContext] = useContext(Context);
     const {url,bodyRequest,requestAxios} = context.appRequest;
-    
+    const {appState} = context;
     const onControl = async () =>{
+        await setContext({...context,appState:{...appState,loading:true}});
         let res = await requestAxios(url,{...bodyRequest,control:'1100'});
         console.log(res );
         res !== undefined && await setContext({...context,appResponse:res.response});
@@ -17,6 +18,7 @@ function ControlOnOff() {
     }
 
     const offControl = async () =>{
+        await setContext({...context,appState:{...appState,loading:true}});
         let res = await requestAxios(url,{...bodyRequest,control:'1000'});
         console.log(res);
         res !== undefined && await setContext({...context,appResponse:res.response});
