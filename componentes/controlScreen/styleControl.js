@@ -38,6 +38,11 @@ const stylesControl = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    video:{
+        width:'100%',
+        height: 200,
+        backgroundColor:'gray'
     }
 });
 
