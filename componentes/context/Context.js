@@ -12,7 +12,7 @@ const Response = {
 }
 
 const Request = {
-    url:'http://187.218.30.94:90/',
+    url:'http://187.218.30.94:100',
     bodyRequest:{
         control:'1100',
         cT:3216,

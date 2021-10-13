@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
 
-import {ActivityIndicator, StatusBar, ImageBackground} from 'react-native';
+import {StatusBar, ImageBackground} from 'react-native';
 
 import {Context, appStateContext} from './componentes/context/Context';
 import stylesApp from './stylesApp';
@@ -33,8 +33,6 @@ const App = () => {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Control" component={Control} />
             </Stack.Navigator>
-
-            {/* <ActivityIndicator animating={context.appState.loading} style={stylesApp.spinner}size="large" color="red" />*/}
           </Context.Provider>
         </NavigationContainer>
       </ImageBackground>

@@ -1,0 +1,5 @@
+npm install 
+posiblemente se tienen que utlizar --legacy true
+npm i react-native-eject
+npm i @react-native-community/cli
+npx react-native eject
